@@ -2,29 +2,48 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Facades\Auth;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    //Login attemp stuff
-    //$request is the variable for the actual request
-    //$credentials is the variable for the user login
-    public function authenticate(Request $request): RedirectResponse{
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+   //Moves to register page
+   public function registerUser(){
+        return view('register');
+   }
 
-        //Assuming this returns a true/false -> if true login in if not deny
-        if(Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect()->intended('dashboard');
+   //Backend of register page AKA creating user
+   public function registerUserPost(Request $request){
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = $request->password;
+
+        $user->save();
+        return back()->with('success', 'Register Successfully');
+   }
+
+   //Moves to login page
+   public function loginUser(){
+        return view('login');
+   }
+
+   public function loginUserPost(Request $request){
+        //Given login info
+        $credetials = [
+            'email' => $request->email,
+            'password' => $request->password,
+        ];
+
+        if(Auth::attempt($credetials)){
+            return redirect('/dashboard')->with('success', 'Login Success');
         }
+        return back()->with('error', 'Invalid Email or Password');
+   }
 
-        return back()->withErrors([
-            'email' => 'Invalid Credentials'
-        ])->onlyInput('email');
-    }
+   public function logoutUser() {
+        Auth::logout();
+        return redirect()->route('loginUser');
+   }
 }
