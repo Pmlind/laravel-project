@@ -21,7 +21,7 @@ class AuthController extends Controller
         $user->password = $request->password;
 
         $user->save();
-        return back()->with('success', 'Register Successfully');
+        return back()->with('success', 'Successfully Registered');
    }
 
    //Moves to login page
@@ -37,13 +37,13 @@ class AuthController extends Controller
         ];
 
         if(Auth::attempt($credetials)){
-            return redirect('/dashboard')->with('success', 'Login Success');
+            return redirect('dashboard')->with('success', 'Successful Login');
         }
         return back()->with('error', 'Invalid Email or Password');
    }
 
    public function logoutUser() {
         Auth::logout();
-        return redirect()->route('loginUser');
+        return redirect()->route('login');
    }
 }
