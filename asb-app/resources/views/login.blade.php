@@ -2,6 +2,8 @@
 <html>
     <head>
         <title>ASB Test Login</title>
+        <a href="{{ route('register') }}">Register</a>
+
     </head>
     <body style="text-align:center;">
         <div class="row justify-content-center mt-5">
