@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Client;
+use Illuminate\Support\Facades\DB;
+
 
 class DashController extends Controller
 {
     public function index()
     {
-        return view('/dashboard');
+        $data = User::all();
+        return view('/dashboard',['users' => $data]);
     }
 
     //CREATE & LOAD DB
@@ -20,26 +23,20 @@ class DashController extends Controller
 
     //INVOLVES DB ENTRIES
     public function createClient(Request $request){
-        $client = new Client();
-        $client->name = $request->name;
-        $client->email = $request->email;
-        $client->gender = $request->gender;
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = $request->password;
 
-        $client->save();
+        $user->save();
+        return back()->with('success', 'Successfully Registered');
     }
 
     //TAKES EMAIL TO FIND TABLE ENTRY
-    public function deleteClient(){
-     
+    public function deleteClient(Request $request){
+        $email = $request->email;
+        $user = DB::table('users')->where('email', $email);
+        $user->delete();
+        return back();
     }
-
-    //TAKES EMAIL TO FIND TABLE ENTRY
-    public function updateClient(){
-     
-    }
-
-    //TAKES EMAIL TO FIND TABLE ENTRY
-    public function assignUser(){
-    
-   }
 }

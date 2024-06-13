@@ -13,15 +13,9 @@
                     </form>
             </div>
         </nav>
-        
-        @if(Session::has('success'))
-            <div class="alert alert-success" role="alert">
-                {{ Session::get('success') }}
-            </div>
-        @endif
 
         <p>Add Client</p>
-        <form action="{{ route('register') }}" method="POST">
+        <form action="{{ route('create') }}" method="POST">
             @csrf
                 <label for="name" class="form-label">Name</label>
                 <input type="text" name="name" class="form-control" id="name" placeholder="John Doe" required>
@@ -29,51 +23,41 @@
                 <label for="email" class="form-label">Email address</label>
                 <input type="email" name="email" class="form-control" id="email" placeholder="name@example.com" required>
 
-                <label for="gender" class="form-label">Gender</label>
-                <input type="text" name="gender" class="form-control" id="gender" required>
-                <button class="btn btn-primary">Add Client</button>
+                <label for="password" class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" id="password" required>
+                <button>Add Client</button>
         </form>
 
         <p>Delete Client</p>
-        <form action="{{ route('create') }}" method="POST">
+        <form action="{{ route('delete') }}" method="POST">
             @csrf
+            @method('DELETE')
                 <label for="email" class="form-label">Email address</label>
                 <input type="email" name="email" class="form-control" id="email" placeholder="name@example.com" required>
-
-                <button class="btn btn-primary">Delete Client</button>
-        </form>
-
-        <p>Update Client</p>
-        <form action="{{ route('register') }}" method="POST">
-            @csrf
-                <label for="name" class="form-label">Name</label>
-                <input type="text" name="name" class="form-control" id="name" placeholder="John Doe" required>
-
-                <label for="email" class="form-label">Email address</label>
-                <input type="email" name="email" class="form-control" id="email" placeholder="name@example.com" required>
-
-                <label for="gender" class="form-label">Gender</label>
-                <input type="text" name="gender" class="form-control" id="gender" required>
-                <button class="btn btn-primary">Add Client</button>
-        </form>
-
-        <p>Assign User</p>
-        <form action="{{ route('register') }}" method="POST">
-            @csrf
-                <label for="email" class="form-label">Email address</label>
-                <input type="email" name="email" class="form-control" id="email" placeholder="name@example.com" required>
-
-                <button class="btn btn-primary">Register Client</button>
+                <button>Delete Client</button>
         </form>
         
+        <br>
+        
+        <a href="{{ route('export') }}">Export CSV</a>
+        
+        <br>
+
         <table border=1 class="table table-striped table-hover table-condensed">
             <tr>
                 <th>id</th>
-                <th>First Name</th>
-                <th>Last Name</th>
+                <th>Name</th>
                 <th>Email</th>
-                <th>Gender</th>
+                <th>Password</th>
             </tr>
+            @foreach($users as $user)
+            <tr>
+                <td>{{$user['id']}}</td>
+                <td>{{$user['name']}}</td>
+                <td>{{$user['email']}}</td>
+                <td>{{$user['password']}}</td>
+            </tr>
+            @endforeach
         </table>
 
     </body>
