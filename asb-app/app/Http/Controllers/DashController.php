@@ -50,9 +50,20 @@ class DashController extends Controller
 
     //TAKES EMAIL TO FIND TABLE ENTRY
     public function deleteClient(Request $request){
-        $email = $request->email;
-        $user = DB::table('users')->where('email', $email);
-        $user->delete();
+        $data = $request->email;
+        $client = DB::table('clients')->where('email', $data);
+        $client->delete();
+        return back();
+    }
+
+    public function upgradeClient(Request $request){
+        $data = $request->email;
+        $client = DB::table('clients')->where('email', $data);
+        $user = new User();
+        $user->name = $client->first_name;
+        $user->email = $client->email;
+        $user->password = '1234';
+        $user.save();
         return back();
     }
 }

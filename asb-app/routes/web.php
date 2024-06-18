@@ -22,8 +22,8 @@ Route::group(['middleware' => 'guest'], function () {
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', [DashController::class, 'index']);
     Route::delete('/logout', [AuthController::class, 'logoutUser'])->name('logout');
-//  Route::post('/dashboard', [DashController::class, 'createClient'])->name('create');
     Route::post('/dashboard', [DashController::class, 'showClients'])->name('create');
+   //Route::post('/dashboard', [DashController::class, 'upgradeClient'])->name('upgrade');
     Route::delete('/dashboard', [DashController::class, 'deleteClient'])->name('delete');
     Route::get('/export', [ExportController::class, 'userExport'])->name('export');
 });

@@ -28,8 +28,8 @@
 
                 <label for="gender" class="form-label">Gender</label>
                 <select id="gender" name="gender">
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
                 </select>
                 <button>Add Client</button>
 
@@ -43,6 +43,8 @@
                 <input type="email" name="email" class="form-control" id="email" placeholder="name@example.com" required>
                 <button>Delete Client</button>
         </form>
+
+
         
         <br>
         
@@ -59,6 +61,7 @@
                 <th>Last Name</th>
                 <th>Email</th>
                 <th>Gender</th>
+                <th>Move To User</th>
             </tr>
             @foreach($user as $client)
             <tr>
@@ -67,6 +70,8 @@
                 <td>{{$client['last_name']}}</td>
                 <td>{{$client['email']}}</td>
                 <td>{{$client['gender']}}</td>
+
+                    <td><button>Upgrade</button></td>
             </tr>
             @endforeach
         </table>
