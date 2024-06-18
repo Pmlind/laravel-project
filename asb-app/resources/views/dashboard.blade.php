@@ -17,15 +17,22 @@
         <p>Add Client</p>
         <form action="{{ route('create') }}" method="POST">
             @csrf
-                <label for="name" class="form-label">Name</label>
-                <input type="text" name="name" class="form-control" id="name" placeholder="John Doe" required>
+                <label for="first_name" class="form-label">First Name</label>
+                <input type="text" name="first_name" class="form-control" id="first_name" placeholder="John" required>
+
+                <label for="last_name" class="form-label">Last Name</label>
+                <input type="text" name="last_name" class="form-control" id="last_name" placeholder="Doe" required>
 
                 <label for="email" class="form-label">Email address</label>
                 <input type="email" name="email" class="form-control" id="email" placeholder="name@example.com" required>
 
-                <label for="password" class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" id="password" required>
+                <label for="gender" class="form-label">Gender</label>
+                <select id="gender" name="gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
                 <button>Add Client</button>
+
         </form>
 
         <p>Delete Client</p>
@@ -43,19 +50,23 @@
         
         <br>
 
-        <table border=1 class="table table-striped table-hover table-condensed">
+
+
+        <table border=1>
             <tr>
-                <th>id</th>
-                <th>Name</th>
+                <th>Id</th>
+                <th>First Name</th>
+                <th>Last Name</th>
                 <th>Email</th>
-                <th>Password</th>
+                <th>Gender</th>
             </tr>
-            @foreach($users as $user)
+            @foreach($user as $client)
             <tr>
-                <td>{{$user['id']}}</td>
-                <td>{{$user['name']}}</td>
-                <td>{{$user['email']}}</td>
-                <td>{{$user['password']}}</td>
+                <td>{{$client['id']}}</td>
+                <td>{{$client['first_name']}}</td>
+                <td>{{$client['last_name']}}</td>
+                <td>{{$client['email']}}</td>
+                <td>{{$client['gender']}}</td>
             </tr>
             @endforeach
         </table>
